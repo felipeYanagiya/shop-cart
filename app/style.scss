@@ -1,0 +1,82 @@
+$gray: #999;
+
+body {
+  font-family: "Open Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h2 {
+  color: $gray;
+}
+
+#header {
+  .logo-link {
+    background: url('asset/walmart-sprite.png') 0 -1320px no-repeat;
+    height: 45px;
+    width: 186px;
+    font: 0/0 serif;
+    text-shadow: none;
+    color: transparent;
+    margin: 8px 0 0 19px;
+    text-decoration: none;
+    display:block;
+
+    cursor: pointer;
+  }
+
+  background: #1a75ce;
+  width: 100%;
+}
+
+#product-container {
+  padding: 50px;
+}
+
+input {
+  margin: 5px 0;
+
+  &.name {
+    padding: 7px 200px;
+  }
+
+  &.value {
+    padding: 7px 50px;
+  }
+}
+
+.btn {
+  font-size: 16px;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 7px 55px;
+  cursor: pointer;
+
+  display: inline-block;
+  border-radius: 4px;
+  border-style: solid;
+  color: #FFF;
+  background-color: #5a981c;
+  border-bottom-color: #477716;
+}
+
+#footer {
+  .footer-wrapper {
+    margin: 0 auto;
+
+    width: 278px;
+    height: 95px;
+  }
+
+  .footer-span {
+    color: $gray;
+    font-size: 12px;
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+    display:block;
+    padding: 2px;
+
+    & a {
+      color: #1a75ce
+    }
+  }
+}
