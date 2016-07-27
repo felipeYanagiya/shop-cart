@@ -1,26 +1,58 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router'
+import Cache from 'node-cache';
+let cache = new Cache();
 
-class Order extends Component {
+export default React.createClass({
+  loadGameData() {
+    let bla = cache.get('productKey', (err, value) => {
+      if (!err) {
+        return value;
+      }
+    }) || [];
+    this.setState({
+      data: bla
+    });
+  },
+
+  // bla() {
+  //   return (
+  //     <button className='minus'></button>
+  //     <input />
+  //     <button className='plus' />
+  //   );
+  // },
+
+   getInitialState: function(){
+     return {data: []};
+   },
+
+   componentDidMount: function() {
+     this.loadGameData();
+   },
+
+
   render() {
-    <div id='order-container'>
-      <h2> Meu carrinho '()'</h2>
+    return (<div id='order-container'>
+      <h2> Meu carrinho ({this.state.data.length} item(s))</h2>
 
-      <table>
-        <th>`Item(s)`</th>
-        <th>preço </th>
-        <th>quantidade</th>
-        <th>subtotal</th>
-        <tbody class='tbody'>
-        </tbody>
-      </table>
+      <ul className='header'>
+        <li className='header-item --name'>item(s)</li>
+        <li className='header-item --other'>preço </li>
+        <li className='header-item --other'>quantidade</li>
+        <li className='header-item --other'>subtotal</li>
+      </ul>
 
-      <button class='btn' value='Cadastrar novo produto'/>
-      <button class='btn' value='Finalizar compra'/>
+      <ul>
+        {this.state.data.map((user, i) => {
+          return <li key={i}>{user.name}</li>
+        })}
+      </ul>
+
+      <Link to='/product' className='btn product'>Cadastrar novo produto</Link>
+      <Link to='/checkout' className='btn checkout'>Finalizar compra</Link>
 
     </div>
-
-
+    );
   }
-}
-
-export default Order;
+});

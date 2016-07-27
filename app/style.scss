@@ -32,6 +32,33 @@ h2 {
   padding: 50px;
 }
 
+#order-container {
+  padding: 60px;
+
+  .header {
+    list-style: none;
+    border-radius: 4px 4px 0 0;
+    background-color: #f7f7f7;
+    margin: 0;
+  }
+
+  .header-item {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    margin: 0;
+    padding: 0;
+    color: #666;
+
+    &.--name {
+      width: 50%;
+    }
+    &.--other {
+      width: 16.33%
+    }
+  }
+}
+
 input {
   margin: 5px 0;
 
@@ -51,12 +78,21 @@ input {
   padding: 7px 55px;
   cursor: pointer;
 
+  text-decoration: initial;
   display: inline-block;
   border-radius: 4px;
   border-style: solid;
   color: #FFF;
   background-color: #5a981c;
   border-bottom-color: #477716;
+
+  &.product {
+    float: left;
+  }
+
+  &.checkout {
+    float: right;
+  }
 }
 
 #footer {
