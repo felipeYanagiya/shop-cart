@@ -50,7 +50,7 @@ export default React.createClass({
       </ul>
 
       <Link to='/product' className='btn product'>Cadastrar novo produto</Link>
-      <Link to='/checkout' className='btn checkout'>Finalizar compra</Link>
+      <Link to='/checkout' className='btn --right'>Finalizar compra</Link>
 
     </div>
     );

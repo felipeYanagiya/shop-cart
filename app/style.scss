@@ -30,6 +30,26 @@ h2 {
 
 #product-container {
   padding: 50px;
+
+  .product-form {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    margin: 0 auto;
+
+    input {
+      margin-bottom: 7px;
+
+      &.field {
+        padding: 5px 57px 5px 0;
+
+        &.err {
+          border: #c00 solid 2px;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
 }
 
 #order-container {
@@ -59,18 +79,6 @@ h2 {
   }
 }
 
-input {
-  margin: 5px 0;
-
-  &.name {
-    padding: 7px 200px;
-  }
-
-  &.value {
-    padding: 7px 50px;
-  }
-}
-
 .btn {
   font-size: 16px;
   vertical-align: baseline;
@@ -90,7 +98,7 @@ input {
     float: left;
   }
 
-  &.checkout {
+  &.--right {
     float: right;
   }
 }

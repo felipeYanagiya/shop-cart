@@ -5,13 +5,15 @@ export default React.createClass({
   getInitialState() {
     return {
       nameValue: '',
-      productValue: ''
+      productValue: '',
+      classField: 'field'
     };
   },
 
   onNameChange(event) {
     this.setState({
-        nameValue: event.target.value
+        nameValue: event.target.value,
+        classField: 'field'
       }
     );
 
@@ -20,7 +22,8 @@ export default React.createClass({
 
   onProductChange(event) {
     this.setState({
-        productValue: event.target.value
+        productValue: event.target.value,
+        classField: 'field'
     });
     console.log('state', this.state);
   },
@@ -28,8 +31,11 @@ export default React.createClass({
   validateProduct(event) {
     event.preventDefault();
 
-    //TODO add validation error for required keys
+    //TODO add tooltip error for required fields
     if (this.state.nameValue.trim() === '' || this.state.productValue.trim() === '') {
+      this.setState({
+        classField: 'field err'
+      });
       return;
     }
 
@@ -42,9 +48,6 @@ export default React.createClass({
         'Content-Type': 'application/json'
       }
     }).then((data, err) => {
-      console.log('data', data);
-      console.log('err', err);
-
       if (err) {
         //TODO add error validation
         return;
@@ -56,26 +59,24 @@ export default React.createClass({
 
   },
 
-//TODO
-//center form
   render() {
     return (
       <div id="product-container">
         <h2>Cadastro de produtos</h2>
-        <form onSubmit={this.validateProduct}>
+        <form className='product-form' onSubmit={this.validateProduct}>
           <input
             type='text'
             onChange={this.onNameChange}
             value={this.state.nameValue}
-            className='name'
-            placeholder='Nome do produto' />
+            className={this.state.classField}
+            placeholder='Nome do produto*' />
           <br />
           <input
             type='text'
             onChange={this.onProductChange}
             value={this.state.productValue}
-            className='value'
-            placeholder='Valor do produto' />
+            className={this.state.classField}
+            placeholder='Valor do produto*' />
           <br />
           <input type='submit' className='btn'
             onClick={this.validateProduct}
