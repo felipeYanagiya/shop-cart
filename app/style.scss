@@ -1,4 +1,6 @@
 $gray: #999;
+$item-green: #5ea20d;
+$blue: #1a75ce;
 
 body {
   font-family: "Open Sans", sans-serif;
@@ -55,6 +57,10 @@ h2 {
 #order-container {
   padding: 60px;
 
+  .order-header {
+    margin-bottom: 40px;
+  }
+
   .header {
     list-style: none;
     border-radius: 4px 4px 0 0;
@@ -67,15 +73,96 @@ h2 {
     vertical-align: middle;
     float: none;
     margin: 0;
-    padding: 0;
+    padding: 20px 0;
     color: #666;
 
     &.--name {
       width: 50%;
     }
     &.--other {
-      width: 16.33%
+      width: 16.33%;
+
+      &.--sub-total {
+        text-align: right;
+      }
     }
+  }
+
+  .order-footer {
+    background-color: #f7f7f7;
+    border-radius: 0 0 4px 4px;
+    padding: 25px;
+
+    .order-total{
+      width: 49.95%;
+      float: right;
+      margin-right: 0;
+      text-align: right;
+    }
+  }
+
+  .item-row {
+    list-style: none;
+    margin: 0;
+
+    li {
+        display: inline-block;
+        float: none;
+        margin: 0;
+        padding: 40px 0;
+
+        &.item-name {
+          width: 50%;
+          color: $blue;
+        }
+        &.item-value {
+          width: 16.33%;
+          color: $item-green;
+        }
+        &.item-quantity {
+          width: 16.33%;
+
+          .qty-btn {
+            color: $blue;
+            cursor: pointer;
+            width: 35px;
+            height: 28px;
+            padding: 1px 0 28px 0;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+            border: 1px solid #d2d2d2;
+            background: #f4f4f4;
+            font-size: 20px;
+
+            &.--minus {
+              border-top-left-radius: 5px;
+              border-bottom-left-radius: 5px;
+            }
+            &.--plus {
+              border-top-right-radius: 5px;
+              border-bottom-right-radius: 5px;
+            }
+          }
+
+          .item-quantity-input{
+            padding: 0 10px;
+            height: 29px;
+            width: 18px;
+            border: 1px solid #d2d2d2;
+            text-align: center;
+            font-family: "open sans",arial,sans-serif;
+            margin: 0;
+            font-size: 15px;
+          }
+        }
+        &.item-sub-total {
+          width: 16.33%;
+          color: $item-green;
+          text-align: right;
+        }
+    }
+
   }
 }
 
