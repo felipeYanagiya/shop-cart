@@ -30,6 +30,118 @@ h2 {
   width: 100%;
 }
 
+#checkout-container {
+
+  .checkout-success {
+    padding: 50px;
+
+    .success {
+      font-family: 'Open Sans', sans-serif;
+      width: 100%;
+      text-align: center;
+
+      .success-image {
+        background: url('asset/walmart-sprite.png') 0 -217px no-repeat;
+        height: 72px;
+        width: 68px;
+        font: 0/0 serif;
+        text-shadow: none;
+        color: transparent;
+        margin: 0 auto;
+        text-decoration: none;
+        display:block;
+      }
+
+      .success-header {
+        font-size: 22px;
+        color: #808080;
+      }
+
+      .success-order {
+        color: #808080;
+      }
+
+      .success-value {
+        color: $item-green;
+      }
+    }
+  }
+
+  .middle {
+    padding: 50px;
+
+    .order-items {
+      background-color: #f7f7f7;
+      padding: 25px 0;
+    }
+
+    .product {
+      width: 75%;
+      display: inline-block;
+
+      .description {
+        padding: 25px;
+      }
+
+      .item-row {
+        padding: 0 45px;
+      }
+
+      .item-name {
+        padding: 8px 0;
+        color: $gray;
+      }
+    }
+
+    .quantity {
+      width: 25%;
+      display: inline-block;
+
+      .product-quantity {
+        padding: 25px;
+      }
+
+      .item-row {
+        padding: 0 45px;
+      }
+
+      .item-name {
+        padding: 8px 0;
+        color: $gray;
+      }
+    }
+  }
+
+  .order-container {
+    padding: 20px 0;
+    font-size: 24px;
+    border: 2px solid #f7f7f7;
+
+    .order {
+      width: 65%;
+      display: inline-block;
+      vertical-align: middle;
+      padding-left: 25px;
+
+      .order-name {
+        color: #808080;
+      }
+
+      .order-value {
+        color: $item-green;
+      }
+    }
+
+    .values {
+      width: 30%;
+      display: inline-block;
+      vertical-align: middle;
+
+      color: $gray;
+    }
+  }
+}
+
 #product-container {
   padding: 50px;
 
@@ -59,6 +171,7 @@ h2 {
 
   .order-header {
     margin-bottom: 40px;
+    font-size: 26px;
   }
 
   .header {

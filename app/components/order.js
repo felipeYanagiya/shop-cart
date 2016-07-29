@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { Link, withRouter } from 'react-router'
 import axios from 'axios';
 import numeral from 'numeral';
@@ -35,8 +35,6 @@ const config = {
 
 export default withRouter(React.createClass({
   loadProductData() {
-    console.log('loading data');
-
     axios.get('http://localhost:1337/parse/classes/Product', config)
       .then((result, err) => {
       //TODO add err validation
@@ -57,6 +55,13 @@ export default withRouter(React.createClass({
     });
   },
 
+  calculateDiscount() {
+    const total = this.calculateSubTotalValue(this.state.data);
+    const discounted = this.calculateTotalValue(this.state.data);
+
+    return this.formatNumber(parseFloat(total) - parseFloat(discounted));
+  },
+
   handleOrder(event) {
     event.preventDefault();
 
@@ -68,14 +73,15 @@ export default withRouter(React.createClass({
     axios.post('http://localhost:1337/parse/classes/Order', {
       orderNumber: Math.floor(Math.random() * 10000000000),
       totalValue: this.state.total,
-      totalDiscount: this.state.subTotal - this.state.total
+      totalDiscount: this.calculateDiscount(),
+      data: this.state.data
     }, config).then((data, err) => {
       //TODO add err validation
       if (err) {
         console.log(err);
       }
 
-      this.props.router.replace('/checkout');
+      this.props.router.replace(`/checkout/${data.data.objectId}`);
     });
   },
 
@@ -191,14 +197,15 @@ export default withRouter(React.createClass({
               <span>{this.state.data[idx].subTotal}</span>
             </li>
           </ul>
-    );
-      })}
+        );
+        })
+      }
 
       <section className='order-footer'>
         <div className='order-total'>
           <div className='order-sub-total'>
             <span className='sub-total-label'>
-              Subtotal ({this.state.data.length} item(ns)):
+              Subtotal ({this.state.data.length} item(ns)):&nbsp;
             </span>
             <span className='sub-total-value'>
               {this.state.subTotal}

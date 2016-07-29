@@ -13,7 +13,7 @@ class App extends Component {
       <Router history={hashHistory}>
         <Route path='/' component={Order} />
         <Route path='/product' component={Product} />
-        <Route path='/checkout' component={Checkout} />
+        <Route path='/checkout/:orderId' component={Checkout} />
         <Route path='*' component={NotFound} />
       </Router>
     )
