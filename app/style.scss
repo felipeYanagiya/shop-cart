@@ -91,13 +91,32 @@ h2 {
   .order-footer {
     background-color: #f7f7f7;
     border-radius: 0 0 4px 4px;
-    padding: 25px;
+    padding: 0 25px 150px 25px;
+    margin-bottom: 20px;
 
     .order-total{
-      width: 49.95%;
+      width: 29.95%;
       float: right;
       margin-right: 0;
       text-align: right;
+
+      .order-sub-total {
+        color: #666;
+        padding: 25px 0;
+
+        .sub-total-value {
+          color: $item-green;
+        }
+      }
+
+      .order-total-values {
+        padding: 25px 0;
+        font-size: 20px;
+        border-top: 1px dotted #d2d2d2;
+        .total-value {
+          color: #5ea20d;
+        }
+      }
     }
   }
 

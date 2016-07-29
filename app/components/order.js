@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router'
+import { Link, withRouter } from 'react-router'
 import axios from 'axios';
 import numeral from 'numeral';
 
@@ -33,7 +33,7 @@ const config = {
   }
 };
 
-export default React.createClass({
+export default withRouter(React.createClass({
   loadProductData() {
     console.log('loading data');
 
@@ -46,13 +46,65 @@ export default React.createClass({
 
         result.data.results.forEach((item) => {
           item['quantity'] = 1;
-          item['subTotal'] = numeral(item.value).format('$0,0.00');
+          item['subTotal'] = this.formatNumber(item.value);
         })
 
         this.setState({
-          data: result.data.results
+          data: result.data.results,
+          subTotal: this.formatNumber(this.calculateSubTotalValue(result.data.results)),
+          total: this.formatNumber(this.calculateTotalValue(result.data.results))
         });
     });
+  },
+
+  handleOrder(event) {
+    event.preventDefault();
+
+    if (this.calculateSubTotalValue(this.state.data) < 200) {
+      //TODO add validation error
+      return;
+    }
+
+    axios.post('http://localhost:1337/parse/classes/Order', {
+      orderNumber: Math.floor(Math.random() * 10000000000),
+      totalValue: this.state.total,
+      totalDiscount: this.state.subTotal - this.state.total
+    }, config).then((data, err) => {
+      //TODO add err validation
+      if (err) {
+        console.log(err);
+      }
+
+      this.props.router.replace('/checkout');
+    });
+  },
+
+  calculateSubTotalValue(array) {
+    return array.map((item) => {
+      const value = item.value || 0;
+
+      return parseFloat(item.value) * item.quantity;
+    }).reduce((prev, cur) => {
+      return prev + cur;
+    });
+  },
+
+  calculateTotalValue(array) {
+    const subTotal = this.calculateSubTotalValue(array);
+
+    if (subTotal >= 500 && subTotal < 600) {
+      return subTotal * 0.95;
+    } else if (subTotal >= 600 && subTotal < 700) {
+      return subTotal * 0.90;
+    } else if (subTotal > 700) {
+      return subTotal * 0.85;
+    }
+
+    return subTotal;
+  },
+
+  formatNumber(number) {
+    return numeral(number).format('$0,0.00');
   },
 
   getInitialState() {
@@ -64,7 +116,7 @@ export default React.createClass({
   },
 
   updateSubTotal(quantity, value) {
-    return numeral(quantity * value).format('$0,0.00');
+    return this.formatNumber(quantity * value);
   },
 
   decrease(idx, event) {
@@ -74,7 +126,9 @@ export default React.createClass({
     this.state.data[idx].subTotal = this.updateSubTotal(this.state.data[idx].quantity, this.state.data[idx].value);
 
     this.setState({
-      data: this.state.data
+      data: this.state.data,
+      subTotal: this.formatNumber(this.calculateSubTotalValue(this.state.data)),
+      total: this.formatNumber(this.calculateTotalValue(this.state.data))
     });
   },
 
@@ -85,7 +139,9 @@ export default React.createClass({
     this.state.data[idx].subTotal = this.updateSubTotal(this.state.data[idx].quantity, this.state.data[idx].value);
 
     this.setState({
-      data: this.state.data
+      data: this.state.data,
+      subTotal: this.formatNumber(this.calculateSubTotalValue(this.state.data)),
+      total: this.formatNumber(this.calculateTotalValue(this.state.data))
     });
   },
 
@@ -119,7 +175,7 @@ export default React.createClass({
               <span>{product.name}</span>
             </li>
             <li className='item-value'>
-              <span>Por {numeral(product.value).format('$0,0.00')}</span>
+              <span>Por {this.formatNumber(product.value)}</span>
             </li>
             <li className='item-quantity'>
               <button className='qty-btn --minus' onClick={this.decrease.bind(this, idx)}>-</button>
@@ -135,7 +191,7 @@ export default React.createClass({
               <span>{this.state.data[idx].subTotal}</span>
             </li>
           </ul>
-        );
+    );
       })}
 
       <section className='order-footer'>
@@ -150,16 +206,23 @@ export default React.createClass({
           </div>
           <div className='order-total-values'>
             <span className='total-label'>
-              Valor total: {numeral(this.state.total).format('$0,0.00')}
+              Valor total:&nbsp;
+            </span>
+            <span className='total-value'>
+              {this.formatNumber(this.state.total)}
             </span>
           </div>
         </div>
       </section>
 
-      <Link to='/product' className='btn product'>Cadastrar novo produto</Link>
-      <Link to='/checkout' className='btn --right'>Finalizar compra</Link>
+      <section className='actions'>
+        <Link to='/product' className='btn product'>Cadastrar novo produto</Link>
+        <button to='/checkout' className='btn --right'
+        onClick={this.handleOrder}
+        >Finalizar compra</button>
+      </section>
 
     </div>
     );
   }
-});
+}));
